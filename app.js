@@ -1,7 +1,7 @@
 const cardRow = document.getElementById("card-row");
 const teamDetails = document.getElementById("sports-details");
 
-const searchTeam = () => {
+const searchTeam = async () => {
   cardRow.innerHTML = `
     <div class="spinner-border text-primary mx-auto" role="status">
   <span class="visually-hidden">Loading...</span>
@@ -19,10 +19,13 @@ const searchTeam = () => {
 
   //Search Data
   const url = `https://www.thesportsdb.com/api/v1/json/1/searchteams.php?t=${searchValue}`;
+  const res = await fetch(url)
+  const data = await res.json()
+  displayTeam(data)
 
-  fetch(url)
+  /* fetch(url)
     .then((res) => res.json())
-    .then((data) => displayTeam(data));
+    .then((data) => displayTeam(data)); */
 };
 
 const displayTeam = (data) => {
