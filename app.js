@@ -10,6 +10,13 @@ const searchTeam = () => {
   const searchField = document.getElementById("search-field");
   const searchValue = searchField.value;
 
+  if (searchValue == "") {
+    cardRow.textContent = "";
+    return (cardRow.innerHTML = `
+      <h3 class='mx-auto text-center'><strong>Please!</strong> Search By Team Name</h3>
+      `);
+  }
+
   //Search Data
   const url = `https://www.thesportsdb.com/api/v1/json/1/searchteams.php?t=${searchValue}`;
 
@@ -40,12 +47,15 @@ const displayTeam = (data) => {
   });
 };
 
-const TeamData = (team) => {
+const TeamData = async (team) => {
   console.log(team);
   const url = `https://www.thesportsdb.com/api/v1/json/1/lookupteam.php?id=${team}`;
-  fetch(url)
+  const res = await fetch(url);
+  const data = await res.json();
+  loadTeamDetails(data); 
+  /* fetch(url)
     .then((res) => res.json())
-    .then((data) => loadTeamDetails(data));
+    .then((data) => loadTeamDetails(data)); */
 };
 
 const loadTeamDetails = (teamData) => {
